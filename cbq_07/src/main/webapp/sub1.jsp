@@ -10,7 +10,45 @@
 <meta charset="UTF-8">
 <title>오디션 관리 프로그램</title>
 <script>
+    function check(){
+        if(my.artist_id.value==""){
+            alert("참가번호가 입력되지 않았습니다");
+            my.artist_id.focus();
+            return false;
+        }
 
+        if(my.artist_name.value==""){
+            alert("참가자명이 입력되지 않았습니다");
+            my.artist_name.focus();
+            return false;
+        }
+
+        if(my.artist_birth_year.value=="" || my.artist_birth_month.value=="" || my.artist_birth_month.value==""){
+            alert("생년월일이 입력되지 않았습니다");
+            my.artist_birth_year.focus();
+            return false;
+        }
+
+        if(!my.artist_gender[0].checked && !my.artist_gender[1].checked){
+            alert("성별이 선택되지 않았습니다");
+            my.artist_gender.focus();
+            return false;
+        }
+
+        if(my.talent.value==""){
+            alert("특기가 선택되지 않았습니다");
+            my.talent.focus();
+            return false;
+        }
+        
+        if(my.agency.value==""){
+            alert("소속사가 입력되지 않았습니다");
+            my.agency.focus();
+            return false;
+        }
+        alert("오디션 지원자 정보가 등록되었습니다");
+        return true; //호출한 곳으로 true가 리턴되면 action을 실행한다
+    }
 </script>
 <style>
     *{margin: 0; padding: 0;}
@@ -52,6 +90,15 @@
         text-align: center;
         padding: 20px 0;
     }
+
+    table, th, td{
+        border: 1px solid #ccc;
+    }
+
+    table{
+        width: 600px;
+        margin: 0 auto;
+    }
     
 </style>
 
@@ -91,27 +138,41 @@
                 <tr>
                     <th>생년월일</th>
                     <td>
-                        <input type="text" name="artist_birth_year">년
-                        <input type="text" name="artist_birth_month">월
-                        <input type="text" name="artist_birth_day">일
+                        <input type="text" name="artist_birth_year" style="width: 55px;">년
+                        <input type="text" name="artist_birth_month" style="width: 55px;">월
+                        <input type="text" name="artist_birth_day" style="width: 55px;">일
                     </td>
                 </tr>
 
                 <tr>
-                    <th></th>
-                    <td></td>
+                    <th>성별</th>
+                    <td>
+                    	<input type="radio" name="artist_gender" value="M" checked>남자
+                    	<input type="radio" name="artist_gender" value="F">여자
+                    </td>
                 </tr>
                 <tr>
-                    <th></th>
-                    <td></td>
+                    <th>특기</th>
+                    <td>
+                    	<select name="talent">
+                    		<option value="" selected>특기선택</option>
+                    		<option value="1">댄스</option>
+                    		<option value="2">랩</option>
+                    		<option value="3">노래</option>
+                    	</select>
+                    </td>
                 </tr>
                 <tr>
-                    <th></th>
-                    <td></td>
+                    <th>소속사</th>
+                    <td>
+                        <input type="text" name="agency">
+                    </td>
                 </tr>
                 <tr>
-                    <th></th>
-                    <td></td>
+                    <td colspan="2" style="text-align: center;">
+                        <button type="submit">오디션등록</button>
+                        <button type="reset">다시쓰기</button>
+                    </td>
                 </tr>
 
             </table>
