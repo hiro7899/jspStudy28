@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ page import="java.sql.*" %>
@@ -6,7 +7,8 @@
 
 <%
 	Dao dao = new Dao();
-	List<Dto> list = dao.selectAll();
+	List<Dto> list = dao.selectRank();
+	DecimalFormat df = new DecimalFormat("#.00");
 %>
 
 <!DOCTYPE html>
@@ -86,36 +88,29 @@
     </nav>
 
     <section>
-        <h2>참가자 목록 조회</h2>
+        <h2>참가자 등수 조회</h2>
 		
 		<table>
             <tr>
                 <th>참가번호</th>
                 <th>참가자명</th>
-                <th>생년월일</th>
                 <th>성별</th>
-                <th>특기</th>
-                <th>소속사</th>
+                <th>총점</th>
+                <th>평균</th>
+                <th>등수</th>
             </tr>
 
 			<%	
 			for(Dto d : list){ 
-				String year = d.getArtistBirth().substring(0,4) + "년";
-				String month = d.getArtistBirth().substring(4,6) + "월";
-				String day = d.getArtistBirth().substring(6,8) + "일";
-				
 				String gender = d.getArtistGender().equals("M") ? "남성" : "여성";
-				
-				String talent = d.getTalent().equals("1") ? "댄스"
-						: d.getTalent().equals("2") ? "랩" : "노래";
 			%>
             <tr>
                 <td><%= d.getArtistId() %></td>
                 <td><%= d.getArtistName() %></td>
-                <td><%= year+month+day %></td>
                 <td><%= gender %></td>
-                <td><%= talent %></td>
-                <td><%= d.getAgency() %></td>
+                <td><%= d.getTpoint() %></td>
+                <td><%= df.format(d.getApoint()) %></td>
+                <td><%= d.getRank() %></td>
             </tr>
             <%} %>
         </table>

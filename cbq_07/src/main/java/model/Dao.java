@@ -44,7 +44,9 @@ public class Dao {
 		List<Dto> list = new ArrayList<Dto>();
 		
 		String sql = """
-				SELECT * FROM tbl_artist
+				SELECT * 
+				FROM tbl_artist
+				ORDER BY artist_id
 				""";
 		
 		try {
@@ -61,6 +63,100 @@ public class Dao {
 				dto.setArtistBirth(rs.getString("artist_birth"));
 				dto.setTalent(rs.getString("talent"));
 				dto.setAgency(rs.getString("agency"));
+				
+				list.add(dto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBmanager.close(rs, pstmt, conn);
+		}
+		
+		return list;
+	}
+	
+	public List<Dto> selectMentoPoint(){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		List<Dto> list = new ArrayList<Dto>();
+		
+		String sql = """
+				SELECT p.serial_no, a.artist_id, a.artist_name, a.artist_birth, p.point,
+				    CASE WHEN p.point >= 90 THEN 'A'
+				        WHEN p.point >= 80 THEN 'B'
+				        WHEN p.point >= 70 THEN 'C'
+				        ELSE 'F'
+				    END AS grade,
+				m.mento_name
+				FROM tbl_artist a, tbl_mento m, tbl_point p
+				WHERE a.artist_id = p.artist_id 
+				    AND m.mento_id = p.mento_id
+				ORDER BY p.serial_no
+				""";
+		
+		try {
+			conn = DBmanager.getInstance();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Dto dto = new Dto();
+				
+				dto.setSerialNo(rs.getInt("serial_no"));;
+				dto.setArtistId(rs.getString("artist_id"));
+				dto.setArtistName(rs.getString("artist_name"));
+				dto.setArtistBirth(rs.getString("artist_birth"));
+				dto.setPoint(rs.getInt("point"));
+				dto.setGrade(rs.getString("grade"));
+				dto.setMentoName(rs.getString("mento_name"));
+				
+				list.add(dto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBmanager.close(rs, pstmt, conn);
+		}
+		
+		return list;
+	}
+	
+	public List<Dto> selectRank(){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		List<Dto> list = new ArrayList<Dto>();
+		
+		String sql = """
+				SELECT a.artist_id, a.artist_name, a.artist_gender,
+				    SUM(p.point) AS tpoint, 
+				    AVG(p.point) AS apoint,
+				    RANK() OVER(ORDER BY SUM(p.point) DESC) AS rank
+				FROM tbl_artist a
+				JOIN tbl_point p ON a.artist_id = p.artist_id
+				GROUP BY a.artist_id, a.artist_name, a.artist_gender
+				ORDER BY tpoint DESC
+				""";
+		
+		try {
+			conn = DBmanager.getInstance();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Dto dto = new Dto();
+				
+				dto.setArtistId(rs.getString("artist_id"));
+				dto.setArtistName(rs.getString("artist_name"));
+				dto.setArtistGender(rs.getString("artist_gender"));
+				dto.setTpoint(rs.getInt("tpoint"));
+				dto.setApoint(rs.getDouble("apoint"));
+				dto.setRank(rs.getInt("rank"));
 				
 				list.add(dto);
 			}
