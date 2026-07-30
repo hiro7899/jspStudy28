@@ -1,0 +1,77 @@
+@charset "UTF-8";
+
+.header-box {
+	border-top: 1px solid #e5e5e5;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.header {
+	width: 1200px;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+}
+
+.left-list, .right-list {
+	display: flex;
+}
+
+.left-list li, .right-list li {
+	border-left: 1px solid #e5e5e5;
+	text-align: center;
+	padding: 15px 12px;
+}
+
+.left-list li:hover, .right-list li:hover {
+	background: #f78181;
+}
+
+.left-list li:hover a, .right-list li:hover a {
+	color: #fff;
+}
+
+.header>ul {
+	display: flex;
+}
+
+.header>ul>li {
+	padding: 24px 32px;
+}
+
+.header>ul>li:hover {
+	background: #f78181;
+}
+
+.header>ul>li:hover a {
+	color: #fff;
+}
+
+.logo {
+	padding-top: 8px;
+}
+
+.visual {
+	background: url(../img/main.jpg) no-repeat center center;
+	height: 610px;
+	background-size: cover;
+	overflow: hidden;
+	position: relative;
+}
+
+.visual .inner {
+	position: absolute;
+	left: 50%;
+	margin-left: -550px;
+	top: 100px;
+}
+
+.visual .inner .vtitle {
+	font-size: 32px;
+	color: #fff;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.visual .inner .vtxt {
+	color: #fff;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
