@@ -112,127 +112,58 @@
                 </div>
             </div>
 
-            <!-- 신상품 목록 -->
+            <!-- 회원가입 -->
             <div class="col-9">
-                <h2>가성비가 짱 좋은 여름 반팔티</h2>
-                <div class="row">
-                    <div class="col-5">
-                        <img src="img/man1.jpg" style="width: 100%;" alt="">
-                    </div>
-                    <div class="col-7">
-                        <p class="text-decoration-line-through">12,000원</p>
-                        <p style="font-size: 32px; font-weight: bold;">
-                            <span style="color: brown;" id="price" data-price="10800">10%</span>
-                            <span>10,800원</span>
-                        </p>
-                        <p>국내/해외 배송 : 국내배송</p>
-                        <p>배송비 : 3,000원(5만원 이상 구매시 무료배송)</p>
-                        <div>
-                            <button class="minus">-</button>
-                            <input type="text" name="quantity" value="1" class="quantity">
-                            <button class="plus">+</button>
-                        </div>
-                        <div class="total">10,800(1개)</div>
-                        <button class="btn btn-outline-secondary">장바구니 담기</button>
-                        <button class="btn btn-danger">구매하기</button>
-                    </div>
-                </div>
-
-                <div class="container-fluid mt-5">
-                    <ul class="nav nav-pills mb-3 bg-dark" id="pills-tab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
-                                상품 상세
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
-                                리뷰
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">
-                                Q&A
-                            </button>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="pills-tabContent">
-                        <!--상품 상세-->
-                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                            <img src="img/product1.jpg" alt="">
-                        </div>
-                        <!--리뷰-->
-                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                            <div class="row">
-                                <div class="col-1">
-                                    <div class="id-img">
-
-                                    </div>
-                                </div>
-
-                                <div class="col-11">
-                                    <p>jang******</p>
-                                    <p>선택옵션</p>
-                                    <p>색상: 라이트그레이</p>
-                                    <p>★★★★★ 5</p>
-                                    <p>배송 빨라요. 디자인 별로에요. 싼가격에 그냥 씁니다</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-1">
-                                    <div class="id-img">
-
-                                    </div>
-                                </div>
-
-                                <div class="col-11">
-                                    <p>jang******</p>
-                                    <p>선택옵션</p>
-                                    <p>색상: 라이트그레이</p>
-                                    <p>★★★★★ 5</p>
-                                    <p>배송 빨라요. 디자인 별로에요. 싼가격에 그냥 씁니다</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!--리뷰-->
-                        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">문의유형</th>
-                                        <th scope="col">답변상태</th>
-                                        <th scope="col">문의/답변</th>
-                                        <th scope="col">작성자</th>
-                                        <th scope="col">작성일</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">상품</th>
-                                        <td>답변완료</td>
-                                        <td>반품 시 배송비 관련 질문입니다</td>
-                                        <td>@mdo*****</td>
-                                        <td>2027-08-06</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">상품</th>
-                                        <td>답변완료</td>
-                                        <td>반품 시 배송비 관련 질문입니다</td>
-                                        <td>@mdo*****</td>
-                                        <td>2027-08-06</td>
-                                    </tr><tr>
-                                        <th scope="row">상품</th>
-                                        <td>답변완료</td>
-                                        <td>반품 시 배송비 관련 질문입니다</td>
-                                        <td>@mdo*****</td>
-                                        <td>2027-08-06</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                <h2>회원가입</h2>
+                <form name="my" method="post" action="" onsubmit="return check()">
+                    <div class="row mb-3">
+                        <label for="userid" class="col-sm-2 col-form-label">아이디</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="userid" class="form-control" id="userid">
                         </div>
                     </div>
-                </div>
+                    <div class="row mb-3">
+                        <label for="password" class="col-sm-2 col-form-label">패스워드</label>
+                        <div class="col-sm-10">
+                        <input type="password" name="password" class="form-control" id="password">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="email" class="col-sm-2 col-form-label">이메일</label>
+                        <div class="col-sm-10">
+                            <input type="email" name="email" class="form-control" id="email" placeholder="example@google.com">
+                        </div>
+                    </div>
 
+                    <div class="row mb-3">
+                        <label for="tel" class="col-sm-2 col-form-label">전화번호</label>
+                        <div class="col-sm-10">
+                            <input type="tel" name="tel" class="form-control" id="tel">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="date" class="col-sm-2 col-form-label">가입날짜</label>
+                        <div class="col-sm-10">
+                            <input type="date" name="regdate" class="form-control" id="date">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="age" class="col-sm-2 col-form-label">나이</label>
+                        <div class="col-sm-10">
+                            <input type="number" name="age" class="form-control" id="age">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="formFile" class="form-label">첨부</label>
+                        <input class="form-control" name="picture" type="file" id="formFile">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Sign in</button>
+                    <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                </form>
             </div>
         </div>
     </div>

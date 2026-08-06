@@ -33,3 +33,19 @@
     font-weight: bold;
     padding: 30px 0;
 }
+
+.id-img {
+    width: 52px;
+    height: 52px;
+    background-image: url(../img/man1.jpg);
+    border-radius: 26px;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #dc3545 !important;
+    color: #ffffff !important;
+}
+
+.nav-pills .nav-link {
+    color: #ffffff;
+}
