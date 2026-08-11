@@ -9,10 +9,10 @@
   <meta name="Keywords" content="반응형홈페이지, JAVA, JSP, PHP, 대전직업전문학교, 대전국비지원, 국비무료">
   <meta name="Description" content="응용SW개발자를 위한 반응형 홈페이지">
   <title>JSL인재개발원</title>
-  <link href="/css/font-awesome.min.css" rel="stylesheet">
-  <link href="/css/common.css" rel="stylesheet">
-  <link href="/css/layout.css" rel="stylesheet">
-  <script src="js/jquery-3.3.1.min.js"></script>
+  <link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/css/layout.css" rel="stylesheet">
+  <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 
@@ -34,7 +34,7 @@
 			<nav class="top_right">
 				<ul>
 					<li class="first"><a href="login/login.html">로그인</a></li>
-					<li><a href="member/member.html">회원가입</a></li>
+					<li><a href="member/signup.do">회원가입</a></li>
 				</ul>
 			</nav>
 			
