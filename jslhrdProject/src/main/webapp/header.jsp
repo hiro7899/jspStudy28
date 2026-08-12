@@ -33,8 +33,16 @@
 			</nav>
 			<nav class="top_right">
 				<ul>
-					<li class="first"><a href="login/login.html">로그인</a></li>
-					<li><a href="member/signup.do">회원가입</a></li>
+					<%
+						String user = (String)session.getAttribute("userid");
+						if(user == null){
+					%>
+					<li class="first"><a href="${pageContext.request.contextPath}/member/login.do">로그인</a></li>
+					<li><a href="${pageContext.request.contextPath}/member/signup.do">회원가입</a></li>
+					<%} else { %>
+					<li class="first"><a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a></li>
+               		<li><a href="${pageContext.request.contextPath}/mypage/mylove.do">마이페이지</a></li>
+               		<%} %>
 				</ul>
 			</nav>
 			

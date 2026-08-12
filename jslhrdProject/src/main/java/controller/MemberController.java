@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.LoginService;
+import service.LogoutService;
+import service.SignUpService;
 import service.UserIdCheck;
 
 @WebServlet("/member/*")
@@ -38,7 +41,22 @@ public class MemberController extends HttpServlet {
 		case "/useridcheck.do":
 			new UserIdCheck().doCommand(request, response);
 			break;
+		case "/signuppro.do":
+			new SignUpService().doCommand(request, response);
+			response.sendRedirect(request.getContextPath() + "/main.do");
+			break;
+		case "/login.do":
+			page = "/mem/login.jsp";
+			break;
+		case "/loginpro.do":
+			new LoginService().doCommand(request, response);
+			break;
+		case "/logout.do":
+			new LogoutService().doCommand(request, response);
+			response.sendRedirect(request.getContextPath() + "/main.do");
+			break;
 		}
+		
 		if(page != null) {
 			request.getRequestDispatcher(page).forward(request, response);
 		}

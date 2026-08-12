@@ -202,6 +202,7 @@
 				}else {
 					$(this).attr("action", "${pageContext.request.contextPath}/member/signuppro.do");
 					$(this).attr("method", "post");
+					this.submit();
 				}
 			});
 		});
