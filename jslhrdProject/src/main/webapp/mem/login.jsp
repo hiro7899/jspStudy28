@@ -55,6 +55,9 @@
 					</div>
 					<!-- <a class="btn_login btn_Blue" href="javascript:fn_login();">로그인</a> -->
 					<button type="button" id="loginBtn" class="btn_login btn_Blue">로그인</button>
+					<div style="padding-top: 30px;">
+						<input type="checkbox" name="useridcheck" id="saveid" style="width: 16px; height: 16px; margin-right: 10px">아이디 저장
+					</div>
 					<div id="errmsg" style="padding-top: 30px; color: #f00;"></div>
 				</form>
 			</div>
@@ -79,6 +82,11 @@
 	
 	<script>
 		$(function() {
+			if ($.cookie("saveid")) {
+				$("#userid").val(savedId);
+				$("#saveid").prop("checked", true);
+			}
+			
 			$("#loginBtn").on("click", function() {
 				let userid = $("#userid").val();
 				let password = $("#password").val();
@@ -89,6 +97,14 @@
 					data: {userid:userid, password:password},
 					success: function(data){
 						if(data === "success"){
+							if($("#saveid").prop("checked")){
+								//아이디 쿠키에 저장
+								$.cookie("saveid", userid, {expires: 7});
+							}else{
+								//쿠키 삭제
+								$.removeCookie("saveid");
+							}
+							
 							location.href="${pageContext.request.contextPath}/main.do";
 						} else{
 							$("#errmsg").text("아이디 또는 패스워드를 확인하세요");

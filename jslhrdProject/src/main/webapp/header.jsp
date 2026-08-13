@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -13,6 +13,7 @@
   <link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet">
   <link href="${pageContext.request.contextPath}/css/layout.css" rel="stylesheet">
   <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 </head>
 <body>
 
@@ -25,7 +26,7 @@
 		<header class="header">
 			<nav class="top_left">
 			  <ul>
-			  	<li class="first"><a href="index.html">HOME</a></li>
+			  	<li class="first"><a href="${pageContext.request.contextPath}/main.do">HOME</a></li>
 				<li><a href="#">모집안내</a></li>
 				<li><a href="#">입학상담</a></li>
 				<li><a href="#">교육신청</a></li>
@@ -33,17 +34,18 @@
 			</nav>
 			<nav class="top_right">
 				<ul>
-					<%
-						String user = (String)session.getAttribute("userid");
-						if(user == null){
-					%>
-					<li class="first"><a href="${pageContext.request.contextPath}/member/login.do">로그인</a></li>
-					<li><a href="${pageContext.request.contextPath}/member/signup.do">회원가입</a></li>
-					<%} else { %>
-					<li class="first"><a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a></li>
-               		<li><a href="${pageContext.request.contextPath}/mypage/mylove.do">마이페이지</a></li>
-               		<%} %>
+					<c:choose>
+						<c:when test="${empty sessionScope.userid}">
+							<li class="first"><a href="${pageContext.request.contextPath}/member/login.do">로그인</a></li>
+							<li><a href="${pageContext.request.contextPath}/member/signup.do">회원가입</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="first"><a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a></li>
+		               		<li><a href="${pageContext.request.contextPath}/mypage/mylove.do">마이페이지</a></li>
+	               		</c:otherwise>
+               		</c:choose>
 				</ul>
+				
 			</nav>
 			
 			<div class="gnb_group">
@@ -59,9 +61,9 @@
 								<li><a href="about/map.html">찾아오시는길</a></li>
 							</ul>
 						</li>
-						<li><a href="portfolio.html">포트폴리오</a>
+						<li><a href="${pageContext.request.contextPath}/port/list.do">포트폴리오</a>
 							<ul class="nav_2depth">
-								<li><a href="portfolio/portfolio.html">포트폴리오</a></li>
+								<li><a href="${pageContext.request.contextPath}/port/list.do">포트폴리오</a></li>
 							</ul>
 						</li>
 						<li><a href="notice.html">커뮤니티</a>
