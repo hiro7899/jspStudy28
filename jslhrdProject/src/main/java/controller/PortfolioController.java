@@ -2,12 +2,24 @@ package controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.BlogWriteService;
+
 @WebServlet("/port/*")
+@MultipartConfig(
+		fileSizeThreshold = 1024 * 1024 * 2, //2MB
+		maxFileSize = 1024 * 1024 * 10, //10MB
+		maxRequestSize = 1024 * 1024 * 50 //50MB
+)//@MultipartConfig 이 서블릿은 multipart/form-data 방식의 파일 업로드를 처리한다
+//fileSizeThreshold 파일을 메모리에서 처리할지 임시 파일로 저장할지 결정하는 기준크기
+//maxFileSize 파일 하나의 최대크기
+//maxRequestSize HTTP 요청 전체의 최대크기(타이틀, 컨텐츠, 첨부파일, 글쓴이) 전체 합친 용량
+
 public class PortfolioController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -37,6 +49,10 @@ public class PortfolioController extends HttpServlet {
 			break;
 		case "/write.do":
 			page = "/portfolio/write.jsp";
+			break;
+		case "/writepro.do":
+			new BlogWriteService().doCommand(request, response);
+			
 			break;
 		case "/view.do":
 			page = "/portfolio/view.jsp";
