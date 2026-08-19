@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import service.BlogWriteService;
 
@@ -48,10 +49,17 @@ public class PortfolioController extends HttpServlet {
 			page = "/portfolio/list.jsp";
 			break;
 		case "/write.do":
+			HttpSession session = request.getSession();
+			Object userid = session.getAttribute("userid");
+			if(userid == null) {
+				response.sendRedirect(request.getContextPath() + "/member/login.do");
+				return;
+			}
 			page = "/portfolio/write.jsp";
 			break;
 		case "/writepro.do":
 			new BlogWriteService().doCommand(request, response);
+			response.sendRedirect(request.getContextPath() + "/port/list.do");
 			
 			break;
 		case "/view.do":

@@ -69,7 +69,7 @@
 						</tr>
 						<tr>
 							<th>글쓴이</th>
-							<td><input type="text" name="name"></td>
+							<td><input type="text" name="name" value="${sessionScope.userid}" readonly="readonly"></td>
 						</tr>
 					</tbody>
 				</table>

@@ -82,11 +82,12 @@
 	
 	<script>
 		$(function() {
-			if ($.cookie("saveid")) {
-				$("#userid").val(savedId);
-				$("#saveid").prop("checked", true);
-			}
-			
+		    let savedId = $.cookie("saveid");
+		    if (savedId) {
+		        $("#userid").val(savedId);
+		        $("#saveid").prop("checked", true);
+		    }
+
 			$("#loginBtn").on("click", function() {
 				let userid = $("#userid").val();
 				let password = $("#password").val();
