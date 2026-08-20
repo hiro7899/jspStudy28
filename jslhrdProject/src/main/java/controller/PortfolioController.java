@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import service.BlogWriteService;
+import service.PortfolioDelete;
+import service.PortfolioSelectAll;
+import service.PortfolioSelectBno;
+import service.PortfolioUpdateService;
 
 @WebServlet("/port/*")
 @MultipartConfig(
@@ -47,6 +52,7 @@ public class PortfolioController extends HttpServlet {
 		switch(action) {
 		case "/list.do":
 			page = "/portfolio/list.jsp";
+			new PortfolioSelectAll().doCommand(request, response);
 			break;
 		case "/write.do":
 			HttpSession session = request.getSession();
@@ -64,6 +70,19 @@ public class PortfolioController extends HttpServlet {
 			break;
 		case "/view.do":
 			page = "/portfolio/view.jsp";
+			new PortfolioSelectBno().doCommand(request, response);
+			break;
+		case "/delete.do":
+			new PortfolioDelete().doCommand(request, response);
+			response.sendRedirect(request.getContextPath() + "/port/list.do");
+			break;
+		case "/update.do":
+			page = "/portfolio/update.jsp";
+			new PortfolioSelectBno().doCommand(request, response);
+			break;
+		case "/updatepro.do":
+			new PortfolioUpdateService().doCommand(request, response);
+			response.sendRedirect(request.getContextPath() + "/port/list.do");
 			break;
 		}
 		
