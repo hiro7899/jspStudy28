@@ -64,9 +64,9 @@
 				<div class="btn_3wrap">
 					<a href="${pageContext.request.contextPath}/port/list.do">목록</a> <a
 						href="${pageContext.request.contextPath}/port/update.do?bno=${dto.bno}&type=update"
-						onClick="return confirm('수정하시겠어요?')">수정</a> <a
+						onClick="return updateCheck();">수정</a> <a
 						href="${pageContext.request.contextPath}/port/delete.do?bno=${dto.bno}"
-						onClick="return confirm('삭제하시겠어요?')">삭제</a>
+						onClick="return deleteCheck();">삭제</a>
 				</div>
 				<c:if test="${nextDto != null}">
 					<a
@@ -79,7 +79,43 @@
 	</div>
 
 	<!-- end contents -->
-
+	<script>
+		function updateCheck() {
+			const userid = "${sessionScope.userid}";
+			const writer = "${dto.name}";
+			
+			if (userid === "") {
+				alert("로그인 후 이용 가능합니다.");
+				return false;
+			} else if (userid !== writer) {
+				alert("작성자만 수정할 수 있습니다.");
+				return false;
+			} else {
+				return true;
+			}
+		}
+	</script>
+	
+	<script>
+		function deleteCheck() {
+			const userid = "${sessionScope.userid}";
+			const writer = "${dto.name}";
+			
+			if (userid === "") {
+				alert("로그인 후 이용 가능합니다.");
+				return false;
+			} else if (userid !== writer) {
+				alert("작성자만 삭제할 수 있습니다.");
+				return false;
+			} else {
+				if(!confirm("정말 삭제하시겠습니까?")) {
+					return false;
+				}else{
+					return true;
+				}
+			}
+		}
+	</script>
 	<script>
 		$(function() {
 			$(".location  .dropdown > a").on("click", function(e) {

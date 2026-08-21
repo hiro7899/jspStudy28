@@ -9,6 +9,48 @@ import java.util.List;
 import util.DBManager;
 
 public class PortfolioDao {
+	
+	public List<PortfolioDto> mainList(){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = """
+				SELECT *
+				FROM (
+				    SELECT *
+				    FROM portfolio
+				    ORDER BY bno DESC
+				)
+				WHERE ROWNUM <= 3
+				""";
+		
+		List<PortfolioDto> list = new ArrayList<PortfolioDto>();
+		
+		try {
+			conn = DBManager.getInstance();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				PortfolioDto dto = new PortfolioDto();
+				dto.setBno(rs.getInt("bno"));
+				dto.setName(rs.getString("name"));
+				dto.setTitle(rs.getString("title"));
+				dto.setContent(rs.getString("content"));
+				dto.setImgfile(rs.getString("imgfile"));
+				dto.setRegdate(rs.getString("regdate"));
+				dto.setViews(rs.getInt("views"));
+				
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(rs, pstmt, conn);
+		}
+		return list;
+	}
 
 	public void portInsert(PortfolioDto dto) {
 		Connection conn = null;
@@ -126,16 +168,17 @@ public class PortfolioDao {
 
 	}
 
-	public void deleteByBno(int bno) {
+	public void deleteByBno(int bno, String userid) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
-		String sql = "DELETE FROM portfolio WHERE bno = ?";
+		String sql = "DELETE FROM portfolio WHERE bno = ? AND name = ?";
 
 		try {
 			conn = DBManager.getInstance();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, bno);
+			pstmt.setString(2, userid);
 			pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -146,7 +189,7 @@ public class PortfolioDao {
 
 	}
 
-	public void updatePro(PortfolioDto dto) {
+	public void updatePro(PortfolioDto dto, String userid) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
@@ -157,12 +200,14 @@ public class PortfolioDao {
 		if (hasNewImage) {
 			sql = """
 					UPDATE portfolio
-					SET title = ?, content = ?, imgfile = ? WHERE bno = ?
+					SET title = ?, content = ?, imgfile = ? 
+					WHERE bno = ? AND name = ?
 					""";
 		} else {
 			sql = """
 					UPDATE portfolio
-					SET title = ?, content = ? WHERE bno = ?
+					SET title = ?, content = ? 
+					WHERE bno = ? AND name = ?
 					""";
 		}
 		try {
@@ -174,10 +219,12 @@ public class PortfolioDao {
 				pstmt.setString(2, dto.getContent());
 				pstmt.setString(3, dto.getImgfile());
 				pstmt.setInt(4, dto.getBno());
+				pstmt.setString(5, userid);
 			} else {
 				pstmt.setString(1, dto.getTitle());
 				pstmt.setString(2, dto.getContent());
 				pstmt.setInt(3, dto.getBno());
+				pstmt.setString(4, userid);
 			}
 
 			pstmt.executeUpdate();

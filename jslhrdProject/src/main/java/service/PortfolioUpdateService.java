@@ -2,6 +2,7 @@ package service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.util.UUID;
 
@@ -18,9 +19,20 @@ public class PortfolioUpdateService implements Command {
 	@Override
 	public void doCommand(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		
+		String userid =  request.getSession().getAttribute("userid").toString();
+		if(userid == null || userid.equals("")) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('로그인 후 이용해주세요.');");
+			out.println("history.back();");
+			out.println("</script>");
+			return;
+		}
 
 		PortfolioDto dto = new PortfolioDto();
-		request.setCharacterEncoding("UTF-8");
 		int bno = Integer.parseInt(request.getParameter("bno"));
 		
 		String title = request.getParameter("title");
@@ -54,7 +66,7 @@ public class PortfolioUpdateService implements Command {
 		dto.setName(name);
 		
 		PortfolioDao dao = new PortfolioDao();
-		dao.updatePro(dto);
+		dao.updatePro(dto, userid);
 	}
 
 }

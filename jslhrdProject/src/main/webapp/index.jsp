@@ -31,48 +31,24 @@
 			<p class="sub_tit">배움의 즐거움이 있는곳</p>
 			<h2>JSL COLLEGE 소식</h2>
 			<p class="text">JSL인재개발원 다양한 소식을 확인 하실 수 있습니다</p>
-			<a href="#" class="btn-border">READ MORE</a>
+			<a href="${pageContext.request.contextPath}/port/list.do" class="btn-border">READ MORE</a>
 		</div>
 		<ul class="news_list">
-			<li>
-				<a href="#">
-					<img src="./images/news01.jpg" alt="식품경진대회 우수상 사진" class="w100">
-					<strong>식품경진대회 우수상 수상</strong>
-					<p>2017년 식품안전분야 공공데이터 활용 경진대회 우수상을 또 수상하였습니다.</p>
-					<span>2018.09.20</span>
-					<div class="over">
-						<strong>식품경진대회 우수상 수상</strong>
-						<p>2017년 식품안전분야 공공데이터 활용 경진대회 우수상을 또 수상하였습니다.</p>
-						<span>2018.09.20</span>
-					</div>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<img src="./images/news02.jpg" alt="식품경진대회 우수상 사진" class="w100">
-					<strong>식품경진대회 우수상 수상</strong>
-					<p>2017년 식품안전분야 공공데이터 활용 경진대회 우수상을 또 수상하였습니다.</p>
-					<span>2018.09.20</span>
-					<div class="over">
-						<strong>식품경진대회 우수상 수상</strong>
-						<p>2017년 식품안전분야 공공데이터 활용 경진대회 우수상을 또 수상하였습니다.</p>
-						<span>2018.09.20</span>
-					</div>
-				</a>
-			</li>
-			<li class="news_end">
-				<a href="#">
-					<img src="./images/news03.jpg" alt="식품경진대회 우수상 사진" class="w100">
-					<strong>식품경진대회 우수상 수상</strong>
-					<p>2017년 식품안전분야 공공데이터 활용 경진대회 우수상을 또 수상하였습니다.</p>
-					<span>2018.09.20</span>
-					<div class="over">
-						<strong>식품경진대회 우수상 수상</strong>
-						<p>2017년 식품안전분야 공공데이터 활용 경진대회 우수상을 또 수상하였습니다.</p>
-						<span>2018.09.20</span>
-					</div>
-				</a>
-			</li>
+			<c:forEach var="item" items="${list}">
+				<li>
+					<a href="${pageContext.request.contextPath}/port/view.do?bno=${item.bno}&type=view">
+						<img src="/uploads/${item.imgfile}" alt="식품경진대회 우수상 사진" class="w100">
+						<strong>${item.title}</strong>
+						<p>${item.content}</p>
+						<span>${item.regdate.substring(0,10)}</span>
+						<div class="over">
+							<strong>${item.title}</strong>
+							<p>${item.content}</p>
+							<span>${item.regdate.substring(0,10)}</span>
+						</div>
+					</a>
+				</li>
+			</c:forEach>
 		</ul>
 	</section>
 
