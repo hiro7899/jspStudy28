@@ -21,6 +21,7 @@ public class PortfolioUpdateService implements Command {
 
 		PortfolioDto dto = new PortfolioDto();
 		request.setCharacterEncoding("UTF-8");
+		int bno = Integer.parseInt(request.getParameter("bno"));
 		
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
@@ -47,7 +48,7 @@ public class PortfolioUpdateService implements Command {
 			dto.setImgfile(fileName);
 		}
 		String name = request.getParameter("name");
-		
+		dto.setBno(bno);
 		dto.setTitle(title);
 		dto.setContent(content);
 		dto.setName(name);

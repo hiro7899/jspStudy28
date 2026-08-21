@@ -46,7 +46,7 @@
 			<form name="portfolio" method="post" enctype="multipart/form-data"
 				action="${pageContext.request.contextPath}/port/updatepro.do"
 				onsubmit="return check()">
-				<!-- action을 처리하기전에 check()사용자 함수를 실행하고 되돌아 와라-->
+				<input type="hidden" name="bno" value="${dto.bno}">
 				<table class="bord_table">
 					<caption class="sr-only">포트폴리오 입력 표</caption>
 					<colgroup>

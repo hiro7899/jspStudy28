@@ -49,20 +49,31 @@
 			<div class="board_body">
 				<p>${dto.content }</p>
 				<div style="text-align: center; margin-top: 20px;">
-					<img src="/uploads/${dto.imgfile }" alt="" style="width: 30%; height: auto;">
+					<img src="/uploads/${dto.imgfile }" alt=""
+						style="width: 30%; height: auto;">
 				</div>
 			</div>
 			<div class="prev_next">
-				<a href="" class="btn_prev"><i class="fa fa-angle-left"></i> <span
-					class="prev_wrap"> <strong>이전글</strong><span>이전글제목표시</span>
-				</span> </a>
+				<c:if test="${prevDto != null}">
+					<a
+						href="${pageContext.request.contextPath}/port/view.do?bno=${prevDto.bno}&type=view"
+						class="btn_prev"><i class="fa fa-angle-left"></i> <span
+						class="prev_wrap"> <strong>이전글</strong><span>${prevDto.title}</span>
+					</span> </a>
+				</c:if>
 				<div class="btn_3wrap">
-					<a href="${pageContext.request.contextPath}/port/list.do">목록</a>
-					<a	href="${pageContext.request.contextPath}/port/update.do?bno=${dto.bno}" onClick="return confirm('수정하시겠어요?')">수정</a> 
-					<a href="${pageContext.request.contextPath}/port/delete.do?bno=${dto.bno}" onClick="return confirm('삭제하시겠어요?')">삭제</a>
+					<a href="${pageContext.request.contextPath}/port/list.do">목록</a> <a
+						href="${pageContext.request.contextPath}/port/update.do?bno=${dto.bno}&type=update"
+						onClick="return confirm('수정하시겠어요?')">수정</a> <a
+						href="${pageContext.request.contextPath}/port/delete.do?bno=${dto.bno}"
+						onClick="return confirm('삭제하시겠어요?')">삭제</a>
 				</div>
-				<a href="" class="btn_next"> <span class="next_wrap"> <strong>다음글</strong><span>다음글제목표시</span>
-				</span> <i class="fa fa-angle-right"></i></a>
+				<c:if test="${nextDto != null}">
+					<a
+						href="${pageContext.request.contextPath}/port/view.do?bno=${nextDto.bno}&type=view"
+						class="btn_next"> <span class="next_wrap"> <strong>다음글</strong><span>${nextDto.title}</span>
+					</span> <i class="fa fa-angle-right"></i></a>
+				</c:if>
 			</div>
 		</div>
 	</div>

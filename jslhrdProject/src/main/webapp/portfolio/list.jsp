@@ -76,7 +76,7 @@
 							<i class="fa fa-eye"></i> ${item.views}
 						</span>
 						<p class="title">
-							<a href="${pageContext.request.contextPath}/port/view.do?bno=${item.bno}">${item.title}</a>
+							<a href="${pageContext.request.contextPath}/port/view.do?bno=${item.bno}&type=view">${item.title}</a>
 						</p>
 						<span class="text">
 							 ${item.content}
