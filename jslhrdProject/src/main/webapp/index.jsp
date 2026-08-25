@@ -39,11 +39,29 @@
 					<a href="${pageContext.request.contextPath}/port/view.do?bno=${item.bno}&type=view">
 						<img src="/uploads/${item.imgfile}" alt="식품경진대회 우수상 사진" class="w100">
 						<strong>${item.title}</strong>
-						<p>${item.content}</p>
+						<p>
+							<c:choose>
+								<c:when test="${item.content.length() > 20}">
+									${item.content.substring(0,18)} ...
+								</c:when>
+								<c:otherwise>
+									${item.content}
+								</c:otherwise>
+							</c:choose>
+						</p>
 						<span>${item.regdate.substring(0,10)}</span>
 						<div class="over">
 							<strong>${item.title}</strong>
-							<p>${item.content}</p>
+							<p>
+								<c:choose>
+									<c:when test="${item.content.length() > 30}">
+										${item.content.substring(0,30)} ...
+									</c:when>
+									<c:otherwise>
+										${item.content}
+									</c:otherwise>
+								</c:choose>
+							</p>
 							<span>${item.regdate.substring(0,10)}</span>
 						</div>
 					</a>
