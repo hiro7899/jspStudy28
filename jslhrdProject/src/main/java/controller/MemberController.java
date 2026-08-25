@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.LoginService;
 import service.LogoutService;
+import service.MypageListService;
+import service.MypageService;
 import service.SignUpService;
 import service.UserIdCheck;
 
@@ -54,6 +56,13 @@ public class MemberController extends HttpServlet {
 		case "/logout.do":
 			new LogoutService().doCommand(request, response);
 			response.sendRedirect(request.getContextPath() + "/main.do");
+			break;
+		case "/favorite.do":
+			new MypageService().doCommand(request, response);
+			break;
+		case "/mylist.do":
+			new MypageListService().doCommand(request, response);
+			page = "/mem/mylist.jsp";
 			break;
 		}
 		

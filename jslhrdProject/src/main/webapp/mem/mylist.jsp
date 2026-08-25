@@ -16,7 +16,7 @@
 <body>
 	<!-- sub contents -->
 	<div class="sub_title">
-		<h2>포트폴리오</h2>
+		<h2>찜한 목록</h2>
 		<div class="container">
 			<div class="location">
 				<ul>
@@ -70,19 +70,14 @@
 							<div class="img_wrap">
 								<img src="/uploads/${item.imgfile}" alt="">
 							</div>
-							<span class="info"> <span class="blue_text">No.${item.bno}</span>
+							<span class="info"> <span class="blue_text">No.${item.pbno}</span>
 								<i class="bar"></i> <i class="fa fa-eye"></i> ${item.views}
 							</span>
 							<p class="title">
 								<a
-									href="${pageContext.request.contextPath}/port/view.do?bno=${item.bno}&type=view">${item.title}</a>
+									href="${pageContext.request.contextPath}/port/view.do?bno=${item.pbno}&type=view">${item.title}</a>
 							</p>
 							<span class="text"> ${item.content} </span>
-							<div class="favorite" style="padding: 30px 0;">
-								<button class="favoriteBtn" data-portfoliobno="${item.bno}"
-									style="border: 0 none; padding: 12px 18px; background: #f88; color: #fff;
-										cursor: pointer">찜하기</button>
-							</div>
 						</div></li>	
 				</c:forEach>
 			</ul>
@@ -111,28 +106,6 @@
 				}
 			});
 			
-			
-			$(".favoriteBtn").on("click", function() {
-				const userid = "${sessionScope.userid}";
-				const portbno = $(this).data("portfoliobno");
-				if(userid == ""){
-					alert("찜하시려면 로그인이 필요합니다");
-					return;
-				}
-				
-				$.ajax({
-					type:"post",
-					data:{userid:userid, portbno:portbno},
-					url:"${pageContext.request.contextPath}/member/favorite.do",
-					success:function(res) {
-						alert(res);	
-					}, error:function(){
-						alert("오류발생");
-					}
-					
-				});
-				
-			});
 		});
 	</script>
 </body>

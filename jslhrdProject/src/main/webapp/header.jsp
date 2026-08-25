@@ -41,7 +41,7 @@
 						</c:when>
 						<c:otherwise>
 							<li class="first"><a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a></li>
-		               		<li><a href="${pageContext.request.contextPath}/mypage/mylove.do">마이페이지</a></li>
+		               		<li><a href="${pageContext.request.contextPath}/member/mylist.do">마이페이지</a></li>
 	               		</c:otherwise>
                		</c:choose>
 				</ul>

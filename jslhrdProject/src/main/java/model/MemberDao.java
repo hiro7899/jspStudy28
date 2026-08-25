@@ -3,6 +3,8 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import util.DBManager;
 
@@ -99,4 +101,72 @@ public class MemberDao {
 			}
 			return dto;
 		}
+		
+		public int mypageWish(String userid, int portbno) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			int result = 0;
+			String sql = """
+					INSERT INTO mypage (bno, port_bno, userid)
+					VALUES (mypageseq.NEXTVAL, ?, ?)
+					""";
+			try {
+				conn = DBManager.getInstance();
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, portbno);
+				pstmt.setString(2, userid);
+				
+				result = pstmt.executeUpdate(); //insert가 정상적으로 처리되면 1;
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = -1;
+			} finally {
+				DBManager.close(pstmt, conn);
+			}
+			return result;
+		}
+		
+		public List<MypageDto> getFavoriteList(String userid){
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			List<MypageDto> list = new ArrayList<MypageDto>();			
+			String sql = """
+					SELECT m.bno as mbno, p.bno as pbno, p.name, p.title, p.content, p.imgfile, p.regdate, p.views, m.userid
+					FROM mypage m
+					JOIN portfolio p
+					    ON m.port_bno = p.bno
+					WHERE m.userid = ?
+					""";
+			try {
+				conn = DBManager.getInstance();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, userid);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					MypageDto dto = new MypageDto();
+					dto.setMbno(rs.getInt("mbno"));
+					dto.setPbno(rs.getInt("pbno"));
+					dto.setName(rs.getString("name"));
+					dto.setTitle(rs.getString("title"));
+					dto.setContent(rs.getString("content"));
+					dto.setImgfile(rs.getString("imgfile"));
+					dto.setRegdate(rs.getString("regdate"));
+					dto.setViews(rs.getInt("views"));
+					dto.setUserid(rs.getString("userid"));
+					
+					list.add(dto);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				DBManager.close(rs, pstmt, conn);
+			}
+			return list;
+		}
+		
 }
