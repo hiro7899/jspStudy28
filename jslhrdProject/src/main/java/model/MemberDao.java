@@ -169,4 +169,28 @@ public class MemberDao {
 			return list;
 		}
 		
+		public boolean deleteFavorite(int mbno) {
+			boolean result = false;
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			
+			String sql = """
+					DELETE mypage WHERE bno = ?
+					""";
+			try {
+				conn = DBManager.getInstance();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, mbno);
+				int row = pstmt.executeUpdate();
+				result = (row > 0);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				DBManager.close(pstmt, conn);
+			}
+			
+			return result;
+		}
+		
 }

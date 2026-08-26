@@ -7,9 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import service.LoginService;
 import service.LogoutService;
+import service.MypageDeleteService;
 import service.MypageListService;
 import service.MypageService;
 import service.SignUpService;
@@ -36,6 +38,7 @@ public class MemberController extends HttpServlet {
 		String action = request.getPathInfo();
 		System.out.println("action : " + action);
 		String page = null;
+		HttpSession session = request.getSession(false);
 		switch(action) {
 		case "/signup.do":
 			page = "/mem/member.jsp";
@@ -61,8 +64,15 @@ public class MemberController extends HttpServlet {
 			new MypageService().doCommand(request, response);
 			break;
 		case "/mylist.do":
+			if(session == null || session.getAttribute("userid") == null) {
+				response.sendRedirect(request.getContextPath() + "/member/login.do");
+				return;
+			}
 			new MypageListService().doCommand(request, response);
 			page = "/mem/mylist.jsp";
+			break;
+		case "/mydelete.do":
+			new MypageDeleteService().doCommand(request, response);
 			break;
 		}
 		

@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.MemberDao;
 
@@ -15,9 +16,13 @@ public class MypageService implements Command {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
+		HttpSession session = request.getSession(false);
+		if(session == null || session.getAttribute("userid") == null) {
+			
+			return;
+		}
 		int portbno = Integer.parseInt(request.getParameter("portbno"));
 		String userid = request.getParameter("userid");
-		
 		MemberDao dao = new MemberDao();
 		String msg="";
 		int result = dao.mypageWish(userid, portbno);

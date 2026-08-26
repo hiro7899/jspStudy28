@@ -48,11 +48,11 @@
 				</p>
 			</div>
 			<div class="search_group">
-				<form name="myform" action="">
-					<select name="sel" class="select">
-						<option value="1">제목</option>
-						<option value="2">내용</option>
-					</select> <input type="text" name="search" class="search_word">
+				<form name="myform" action="${pageContext.request.contextPath}/member/mylist.do">
+					<select name="type" class="select">
+						<option value="title">제목</option>
+						<option value="content">내용</option>
+					</select> <input type="text" name="keyword" class="search_word">
 					<button class="btn_search">
 						<i class="fa fa-search"></i><span class="sr-only">검색버튼</span>
 					</button>
@@ -62,10 +62,16 @@
 		<!-- search end -->
 		<div class="bord_list">
 			<ul class="basic_board">
+				<c:if test="${empty list}">
+					<div style="text-align: center; padding:100px 0;">
+						<h2 style="font-size: 32px">찜한 글이 없습니다</h2>
+					</div>
+				</c:if>
 				<c:forEach var="item" items="${list}">
-					<li><span class="date"> <em>
+					<li class="portlist-context">
+						<span class="date"> <em>
 								${item.regdate.substring(8,10)} </em> ${item.regdate.substring(0,8)}
-					</span>
+						</span>
 						<div class="text_wrap">
 							<div class="img_wrap">
 								<img src="/uploads/${item.imgfile}" alt="">
@@ -77,8 +83,14 @@
 								<a
 									href="${pageContext.request.contextPath}/port/view.do?bno=${item.pbno}&type=view">${item.title}</a>
 							</p>
-							<span class="text"> ${item.content} </span>
-						</div></li>	
+							<span class="text"> ${item.content} </span> 
+							<span style="padding: 30px 0;"> <input
+								type="checkbox" class="portCheckBox" value="${item.mbno}"
+								style="width: 20px; height: 20px;">
+								<button class="deleteBtn" data-mbno="${item.mbno}">삭제</button>
+							</span>
+						</div>
+					</li>
 				</c:forEach>
 			</ul>
 			<div class="paging">
@@ -104,6 +116,32 @@
 					$(".location  .dropdown > a").next().hide();
 					$(this).next().show();
 				}
+			});
+			
+			$(".deleteBtn").on("click", function(){
+			    const mbno = $(this).data("mbno");
+			    const $this = $(this);
+			    
+			    const $checkbox = $this.siblings(".portCheckBox");
+			    if(!$checkbox.is(":checked")) {
+			    	alert("삭제할 항목을 먼저 체크해주세요");
+			    	return;
+			    }
+			    $.ajax({
+			        url: "${pageContext.request.contextPath}/member/mydelete.do",
+			        type: "post",
+			        data: { mbno: mbno },
+			        success: function(res){
+			            if(res.trim() === "success"){
+			                $this.closest(".portlist-context").remove();
+			            } else {
+			                alert("삭제 실패했습니다");
+			            }
+			        }, 
+			        error: function(xhr, status, error){
+			            alert("통신 중 오류가 발생했습니다.");
+			        }
+			    });
 			});
 			
 		});

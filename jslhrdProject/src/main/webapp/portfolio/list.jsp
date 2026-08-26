@@ -48,11 +48,11 @@
 				</p>
 			</div>
 			<div class="search_group">
-				<form name="myform" action="">
-					<select name="sel" class="select">
-						<option value="1">제목</option>
-						<option value="2">내용</option>
-					</select> <input type="text" name="search" class="search_word">
+				<form name="myform" action="${pageContext.request.contextPath}/port/list.do">
+					<select name="type" class="select">
+						<option value="title">제목</option>
+						<option value="content">내용</option>
+					</select> <input type="text" name="keyword" class="search_word">
 					<button class="btn_search">
 						<i class="fa fa-search"></i><span class="sr-only">검색버튼</span>
 					</button>
@@ -117,6 +117,7 @@
 				const portbno = $(this).data("portfoliobno");
 				if(userid == ""){
 					alert("찜하시려면 로그인이 필요합니다");
+					location.href = "${pageContext.request.contextPath}/member/login.do";
 					return;
 				}
 				
