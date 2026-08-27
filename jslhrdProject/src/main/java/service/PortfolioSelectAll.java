@@ -33,7 +33,9 @@ public class PortfolioSelectAll implements Command {
 		
 		//총 페이지 수 구하기
 		int totalPage = (int)Math.ceil((double)totalResults / pageSize);
-		
+		if (totalPage == 0) {
+		    totalPage = 1;
+		}
 		//페이지 숫자가 출력되는 블럭의 수
 		int pageBlock = 10;
 		

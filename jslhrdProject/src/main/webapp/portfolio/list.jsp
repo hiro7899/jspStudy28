@@ -52,7 +52,7 @@
 					<select name="type" class="select">
 						<option value="title">제목</option>
 						<option value="content">내용</option>
-					</select> <input type="text" name="keyword" class="search_word">
+					</select> <input type="text" name="keyword" class="search_word" value="${param.keyword}">
 					<button class="btn_search">
 						<i class="fa fa-search"></i><span class="sr-only">검색버튼</span>
 					</button>
@@ -74,8 +74,7 @@
 								<i class="bar"></i> <i class="fa fa-eye"></i> ${item.views}
 							</span>
 							<p class="title">
-								<a
-									href="${pageContext.request.contextPath}/port/view.do?bno=${item.bno}&type=view">${item.title}</a>
+								<a href="${pageContext.request.contextPath}/port/view.do?bno=${item.bno}&type=view">${item.title}</a>
 							</p>
 							<span class="text"> ${item.content} </span>
 							<div class="favorite" style="padding: 30px 0;">
@@ -87,13 +86,24 @@
 				</c:forEach>
 			</ul>
 			<div class="paging">
-				<a href=""><i class="fa  fa-angle-double-left"></i></a> <a href=""><i
-					class="fa fa-angle-left"></i></a> <a href="" class="active">1</a> <a
-					href="">2</a> <a href="">3</a> <a href="">4</a> <a href="">5</a> <a
-					href=""><i class="fa fa-angle-right"></i></a> <a href=""><i
-					class="fa  fa-angle-double-right"></i></a> <a
-					href="${pageContext.request.contextPath}/port/write.do"
-					class="btn_write">글쓰기</a>
+			<c:if test="${startPage > 1}">
+				<a href="${pageContext.request.contextPath}/port/list.do?keyword=${param.keyword}&page=${startPage-1}">
+					<i class="fa fa-angle-double-left"></i>
+				</a>
+			</c:if>
+			
+			<c:forEach begin="${startPage}" end="${endPage}" var="i">
+				<a href="${pageContext.request.contextPath}/port/list.do?keyword=${param.keyword}&page=${i}" 
+  					class="${i == currentPage ? 'active' : ''}">${i}</a>
+			</c:forEach>
+				
+			<c:if test="${endPage < totalPage}">
+				<a href="${pageContext.request.contextPath}/port/list.do?keyword=${param.keyword}&page=${endPage+1}">
+					<i class="fa fa-angle-double-right"></i>
+				</a>
+			</c:if>
+				
+				<a href="${pageContext.request.contextPath}/port/write.do" class="btn_write">글쓰기</a>
 			</div>
 		</div>
 	</div>

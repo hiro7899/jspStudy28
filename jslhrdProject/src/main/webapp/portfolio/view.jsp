@@ -76,9 +76,35 @@
 				</c:if>
 			</div>
 		</div>
-	</div>
 
-	<!-- end contents -->
+			<!-- ============================================ -->
+		<!-- 댓글 영역 시작 (view.jsp 하단, 포트폴리오 내용 아래) -->
+		<!-- ============================================ -->
+		<div id="replyWrap">
+		
+		    <!-- ① 댓글 개수 표시 영역 -->
+		    <h3 id="replyTitle">댓글 <span id="replyCount">0</span>개</h3>
+		
+		    <!-- ② 댓글 입력 영역: textarea + button을 가로로 나란히 배치 -->
+		    <div id="replyInputBox">
+		        <textarea id="replyContent" rows="3" placeholder="댓글을 입력하세요"></textarea>
+		        <button id="replyBtn" type="button">댓글<br>달기</button>
+		    </div>
+		
+		    <!-- ③ 댓글 목록이 실제로 채워질 자리 -->
+		    <div id="replyList">
+		        <!-- 예시 구조 (실제로는 JS가 반복해서 채워넣음)
+		        <div class="replyItem">
+		            <p class="replyInfo"><span class="replyUserId">hong</span><span class="replyDate">2026-08-27</span></p>
+		            <p class="replyContentText">댓글 내용입니다.</p>
+		        </div>
+		        -->
+		    </div>
+		
+		</div>
+		<!-- 댓글 영역 끝 -->
+	</div>
+<!-- end contents -->
 	<script>
 		function updateCheck() {
 			const userid = "${sessionScope.userid}";

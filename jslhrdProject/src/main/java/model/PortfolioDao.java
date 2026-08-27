@@ -361,7 +361,7 @@ public class PortfolioDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = """
-				SELECT * 
+				SELECT COUNT(*) 
 				FROM portfolio 
 				WHERE title LIKE ? OR content LIKE ?
 				""";
