@@ -61,7 +61,11 @@
 						</tr>
 						<tr>
 							<th>내용</th>
-							<td><textarea name="content"></textarea></td>
+							<td>
+								<button type="button" id="btn-ai">AI 글 생성</button>
+								<button type="button" id="btn-translate">일본어 번역</button>
+								<textarea name="content"></textarea>
+							</td>
 						</tr>
 						<tr>
 							<th>첨부</th>
@@ -131,6 +135,51 @@
 					$(this).next().show();
 				}
 			});
+		});
+	</script>
+	<script>
+		$(function() {
+			$(".location  .dropdown > a").on("click",function(e) {
+				e.preventDefault();
+				if($(this).next().is(":visible")) {
+					$(".location  .dropdown > a").next().hide();
+				} else {
+					$(".location  .dropdown > a").next().hide();
+					$(this).next().show();
+				}
+			});
+			
+			//groq
+			$("#btn-ai").click(function () {
+			let title = $("input[name=title]").val();
+
+			if (!title) {
+			alert("제목 먼저 입력하세요");
+			return;
+			}
+
+			$.ajax({
+			type: "POST",
+			url: "${pageContext.request.contextPath}/port/aiWrite.do",
+			data: { title: title },
+			success: function (res) {
+			$("#content").val(res.content);
+			},
+			error: function () {
+				alert("AI 글 생성 실패");
+			}
+			});
+			});
+
+			$("#btn-translate").click(function () {
+				$.post("${pageContext.request.contextPath}/port/translate.do", {
+					content: $("textarea[name=content]").val()
+				}, function (res) {
+					$("textarea[name=content]").val(res.translated);
+				}, "json");
+				});
+
+			
 		});
 	</script>
 </body>

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import service.BlogAiWrite;
+import service.BlogTranslate;
 import service.BlogWriteService;
 import service.PortfolioDelete;
 import service.PortfolioSelectAll;
@@ -83,6 +85,12 @@ public class PortfolioController extends HttpServlet {
 		case "/updatepro.do":
 			new PortfolioUpdateService().doCommand(request, response);
 			response.sendRedirect(request.getContextPath() + "/port/list.do");
+			break;
+		case "/aiWrite.do":
+			new BlogAiWrite().doCommand(request, response);
+			break;
+		case "/translate.do":
+			new BlogTranslate().doCommand(request, response);
 			break;
 		}
 		

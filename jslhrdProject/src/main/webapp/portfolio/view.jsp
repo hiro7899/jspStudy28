@@ -77,7 +77,7 @@
 			</div>
 		</div>
 
-			<!-- ============================================ -->
+		<!-- ============================================ -->
 		<!-- 댓글 영역 시작 (view.jsp 하단, 포트폴리오 내용 아래) -->
 		<!-- ============================================ -->
 		<div id="replyWrap">
@@ -93,12 +93,6 @@
 		
 		    <!-- ③ 댓글 목록이 실제로 채워질 자리 -->
 		    <div id="replyList">
-		        <!-- 예시 구조 (실제로는 JS가 반복해서 채워넣음)
-		        <div class="replyItem">
-		            <p class="replyInfo"><span class="replyUserId">hong</span><span class="replyDate">2026-08-27</span></p>
-		            <p class="replyContentText">댓글 내용입니다.</p>
-		        </div>
-		        -->
 		    </div>
 		
 		</div>
@@ -153,6 +147,143 @@
 					$(this).next().show();
 				}
 			});
+		});
+	</script>
+	
+	<script>
+		$(document).ready(function() {
+		
+		    const port_bno = getParameterByName("bno");
+		
+		    loadReplyList();
+		
+		    // ==========================================
+		    // ① 댓글 목록 불러오기 함수
+		    // ==========================================
+		    function loadReplyList() {
+		
+		        $.ajax({
+		            url: "${pageContext.request.contextPath}/reply/list.do",
+		            type: "GET",
+		            data: { port_bno: port_bno },
+		            dataType: "json",
+		
+		            success: function(res) {
+		                $("#replyCount").text(res.count);
+		
+		                const $replyList = $("#replyList");
+		                $replyList.empty();
+		
+		                if (!res.list || res.list.length === 0) {
+		                    $replyList.html("<p style='color:#999; text-align:center;'>첫 댓글을 남겨보세요!</p>");
+		                    return;
+		                }
+		
+		                $.each(res.list, function(index, reply) {
+		                    // Gson 변환 시 필드명(replyContent, replyDate) 또는 DB컬럼명 호환 처리
+		                    const rawContent = reply.replyContent || reply.reply_content || "";
+		                    const rawDate = reply.replyDate || reply.reply_date;
+		                    const rawUserId = reply.userid || "";
+
+		                    const dateStr = formatDate(rawDate);
+		
+		                    const html =
+		                        "<div class='replyItem'>" +
+		                        "  <p class='replyInfo'>" +
+		                        "    <span class='replyUserId'>" + escapeHtml(rawUserId) + "</span>" +
+		                        "    <span class='replyDate'>" + dateStr + "</span>" +
+		                        "  </p>" +
+		                        "  <p class='replyContentText'>" + escapeHtml(rawContent) + "</p>" +
+		                        "</div>";
+		
+		                    $replyList.append(html);
+		                });
+		            },
+		
+		            error: function(xhr, status, error) {
+		                console.log("댓글 목록 조회 실패: " + error);
+		            }
+		        });
+		    }
+		
+		    // ==========================================
+		    // ② 댓글달기 버튼 클릭 이벤트
+		    // ==========================================
+		    $("#replyBtn").on("click", function() {
+		
+		        const content = $("#replyContent").val().trim();
+		
+		        if (content === "") {
+		            alert("댓글 내용을 입력해주세요.");
+		            return;
+		        }
+		
+		        $.ajax({
+		            url: "${pageContext.request.contextPath}/reply/write.do",
+		            type: "POST",
+		            data: {
+		                port_bno: port_bno,
+		                reply_content: content
+		            },
+		            dataType: "json",
+		
+		            success: function(res) {
+		                if (res.result === "login_required") {
+		                    alert("로그인 후 댓글을 작성할 수 있습니다.");
+		                    return;
+		                }
+		
+		                if (res.result === 1) {
+		                    $("#replyContent").val("");
+		                    loadReplyList();
+		                } else {
+		                    alert("댓글 등록에 실패했습니다.");
+		                }
+		            },
+		
+		            error: function(xhr, status, error) {
+		                console.log("댓글 등록 실패: " + error);
+		            }
+		        });
+		    });
+		
+		    // ==========================================
+		    // 유틸 함수들
+		    // ==========================================
+		    function getParameterByName(name) {
+		        var url = window.location.href;
+		        name = name.replace(/[\[\]]/g, "\\$&");
+		        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+		            results = regex.exec(url);
+		        if (!results) return null;
+		        if (!results[2]) return "";
+		        return decodeURIComponent(results[2].replace(/\+/g, " "));
+		    }
+		
+		    function formatDate(timestamp) {
+		        if (!timestamp) return "";
+		        var d = new Date(timestamp);
+		        if (isNaN(d.getTime())) return "";
+		        
+		        var yyyy = d.getFullYear();
+		        var mm = String(d.getMonth() + 1).padStart(2, "0");
+		        var dd = String(d.getDate()).padStart(2, "0");
+		        var hh = String(d.getHours()).padStart(2, "0");
+		        var mi = String(d.getMinutes()).padStart(2, "0");
+		        return yyyy + "-" + mm + "-" + dd + " " + hh + ":" + mi;
+		    }
+		
+		    // null / undefined 방어 코드가 추가된 escapeHtml
+		    function escapeHtml(text) {
+		        if (text === null || text === undefined) return "";
+		        return String(text)
+		            .replace(/&/g, "&amp;")
+		            .replace(/</g, "&lt;")
+		            .replace(/>/g, "&gt;")
+		            .replace(/"/g, "&quot;")
+		            .replace(/'/g, "&#039;");
+		    }
+		
 		});
 	</script>
 </body>

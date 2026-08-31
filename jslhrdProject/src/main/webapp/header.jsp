@@ -68,7 +68,7 @@
 						</li>
 						<li><a href="notice.html">커뮤니티</a>
 							<ul class="nav_2depth">
-								<li><a href="notice/notice.html">공지사항</a></li>
+								<li><a href="${pageContext.request.contextPath}/noti/list">공지사항</a></li>
 								<li><a href="qna/qa.html">질문과답변</a></li>
 								<li><a href="faq/faq.html">FAQ</a></li>
 								<li><a href="pds/pds.html">자료실</a></li>
