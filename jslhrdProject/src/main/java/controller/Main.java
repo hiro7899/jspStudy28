@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.MainPortNews;
 
-@WebServlet(urlPatterns = {"/main.do", "/index"})
+@WebServlet(urlPatterns = {"/main.do", "/index", ""})
 public class Main extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

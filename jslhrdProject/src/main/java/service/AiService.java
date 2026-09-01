@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 public class AiService {
 	private String apiKey;
+	@SuppressWarnings("unused")
 	private String model;
 	
 	public AiService() {
