@@ -6,11 +6,10 @@ import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import model.PortfolioDao;
 import model.PortfolioDto;
 
@@ -45,7 +44,14 @@ public class PortfolioUpdateService implements Command {
 			fileName = UUID.randomUUID().toString() + "_" + originalFilename;
 			
 			System.out.println(fileName);
-			String uploadPath = "D:\\upload";
+			String os = System.getProperty("os.name").toLowerCase();
+	         String uploadPath;
+
+	         if (os.contains("win")) {
+	             uploadPath = "D:/upload"; // 내 컴퓨터 (Windows)
+	         } else {
+	             uploadPath = "/var/upload"; // 우분투 서버 (Linux)
+	         }
 			
 			File uploadDir = new File(uploadPath);
 			if(!uploadDir.exists()) {
